@@ -8,6 +8,6 @@
         /// <summary>
         /// Current environment
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; init; }
     }
 }

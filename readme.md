@@ -5,7 +5,171 @@ For teaching purposes
 
 ## Immutable collections .NET Core (C# 9)
 
-**TODO**
+In software development, an `immutable object` is one that once created, can't change. 
+
+Provides methods for creating an class instance that is immutable; meaning it cannot be changed once it is created.
+
+In this solution see th [following project](https://github.com/karenpayneoregon/containers-csharp/tree/master/ConsoleApp1) where code is based off Mobile friendly weekly claims application.cfc component..
+
+**Mutable design note getters/setters**
+
+```csharp
+class OrderLine
+{
+    public int Quantity { get; set; }
+    public decimal UnitPrice { get; set; }
+    public float Discount { get; set; }
+
+    public decimal Total
+    {
+        get
+        {
+            return Quantity * UnitPrice * (decimal) (1.0f - Discount);
+        }
+    }
+}
+class Order 
+{     
+    public Order()
+    {
+         Lines = new List<OrderLine>();
+    } 
+
+    public List<OrderLine> Lines { get; } 
+}
+```
+
+**Immutable design**
+
+```csharp
+class OrderLine
+{
+    public OrderLine(int quantity, decimal unitPrice, float discount)
+    {
+        Quantity = quantity;
+        UnitPrice = unitPrice;
+        Discount = discount;
+    }
+
+    public int Quantity { get; }
+
+    public decimal UnitPrice { get; }
+
+    public float Discount { get; }
+
+    public decimal Total
+    {
+        get
+        {
+            return Quantity * UnitPrice * (decimal) (1.0f - Discount);
+        }
+    }
+}
+```
+
+This new design requires that you create a new instance of an `OrderLine` whenever any of the values changes. You can make the design a bit more convenient by adding `WithXxx` methods that let you update individual properties without having to explicitly call the constructor yourself:
+
+```csharp
+class OrderLine
+{
+    // ...
+
+    public OrderLine WithQuantity(int value)
+    {
+        return value == Quantity
+                ? this
+                : new OrderLine(value, UnitPrice, Discount);
+    }
+
+    public OrderLine WithUnitPrice(decimal value)
+    {
+        return value == UnitPrice
+                ? this
+                : new OrderLine(Quantity, value, Discount);
+    }
+
+    public OrderLine WithDiscount(float value)
+    {
+        return value == Discount
+                ? this
+                : new OrderLine(Quantity, UnitPrice, value);
+    }
+}
+
+```
+
+**Usage**
+
+```csharp
+OrderLine apple = new OrderLine(quantity: 1, unitPrice: 2.5m, discount: 0.0f);
+OrderLine discountedAppled = apple.WithDiscount(.3f);
+```
+
+**From Code magazine** 
+
+The author has created a custom exception class which is [ImmutableHashSet](https://docs.microsoft.com/en-us/dotnet/api/system.collections.immutable.immutablehashset-1?view=net-6.0). Note HashSet are unordered as in this case we careless about ordering. Implementation provides custom exception message when attempting to change properties in a class instance.
+
+```csharp
+
+public class InvalidDataTypeException : Exception
+{
+        public static ImmutableHashSet<string>
+    ValidImmutableClassTypes =
+        ImmutableHashSet.Create<string>(
+        "Boolean",
+        "Byte",
+        "SByte",
+        "Char",
+        "Decimal",
+        "Double",
+        "Single",
+        "Int32",
+        "UInt32",
+        "Int64",
+        "UInt64",
+        "Int16",
+        "UInt16",
+        "String",
+        "ImmutableArray",
+        "ImmutableDictionary",
+        "ImmutableList",
+        "ImmutableHashSet",
+        "ImmutableSortedDictionary",
+        "ImmutableSortedSet",
+        "ImmutableStack",
+        "ImmutableQueue"
+    );
+
+    public InvalidDataTypeException(
+        ImmutableHashSet<string> invalidProperties) : base(
+        $"Properties of an instance of " +
+        "ImmutableClass may only " +
+        "contain the following types: Boolean, Byte, " +
+        "SByte, Char, Decimal, Double, Single, " +
+        "Int32, UInt32, Int64, " +
+        "UInt64, Int16, UInt16, String, ImmutableArray, " +
+        "ImmutableDictionary, ImmutableList, ImmutableQueue, " +
+        "ImmutableSortedSet, ImmutableStack or ImmutableClass. " +
+
+        $"Invalid property types: " +
+        $" {string.Join(",", invalidProperties.ToArray())}")
+    {
+        Data.Add("InvalidPropertyTypes",
+            invalidProperties.ToArray());
+    }
+}
+
+```
+
+# init keyword C# 9
+
+**Init only setters** provide consistent syntax to initialize members of an object. Property initializers make it clear which value is setting which property. The downside is that those properties must be settable. Starting with C# 9.0, you can create init accessors instead of set accessors for properties and indexers. Callers can use property initializer syntax to set these values in creation expressions, but those properties are readonly once construction has completed. Init only setters provide a window to change state. That window closes when the construction phase ends. The construction phase effectively ends after all initialization, including property initializers and with-expressions have completed.
+
+**Common classes**
+
+- [ImmutableList](https://docs.microsoft.com/en-us/dotnet/api/system.collections.immutable.immutablelist-1?redirectedfrom=MSDN&view=net-6.0)&lt;T> Class
+- [ImmutableDictionary](https://docs.microsoft.com/en-us/dotnet/api/system.collections.immutable.immutabledictionary-2?redirectedfrom=MSDN&view=net-6.0)<TKey,TValue>
+- [ImmutableHashSet](https://docs.microsoft.com/en-us/dotnet/api/system.collections.immutable.immutablehashset-1?redirectedfrom=MSDN&view=net-6.0)&lt;T>
 
 
 ## init-only setter
