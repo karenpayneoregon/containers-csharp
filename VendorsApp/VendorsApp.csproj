@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net5.0-windows</TargetFramework>
+		<LangVersion>9.0</LangVersion>
+		<UseWPF>true</UseWPF>
+		<ApplicationManifest>app.manifest</ApplicationManifest>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Remove="csharp1.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\ThirdPartyLibrary\ThirdPartyLibrary.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Resource Include="csharp1.png" />
+	</ItemGroup>
+
+</Project>
