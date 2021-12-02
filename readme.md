@@ -247,3 +247,11 @@ Internally, reference types are implemented as pointers, and knowing that, and k
 ![img](assets/StructClass1.png)
 
 ![img](StructConsoleApp/assets/StructClass.png)
+
+
+## Pluralsight courses
+
+[Advanced C# Collections](https://app.pluralsight.com/library/courses/csharp-collections-advanced/table-of-contents) (four hours)
+
+
+

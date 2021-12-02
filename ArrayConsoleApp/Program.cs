@@ -21,6 +21,9 @@ namespace ArrayConsoleApp
 
         }
 
+        /// <summary>
+        /// Find differences between two arrays using Except extension 
+        /// </summary>
         private static void DifferenceBetweenArrays()
         {
             var array1 = new[] { "A", "B", "C" };
@@ -52,6 +55,9 @@ namespace ArrayConsoleApp
             }
         }
 
+        /// <summary>
+        /// Converting string array to int array
+        /// </summary>
         private static void StringArrayToIntegerArray()
         {
             string[] values = { "", "1", "2", null, "4", "Text" };
@@ -109,6 +115,9 @@ namespace ArrayConsoleApp
         private static void InitializeArrays()
         {
 
+            /*
+             * Local function/method
+             */
             void Dummy(int[] sender)
             {
                 Debug.WriteLine(string.Join("," , sender));
@@ -116,7 +125,7 @@ namespace ArrayConsoleApp
 
             var data0 = new int[3];
             var data1 = new int[3] { 1, 2, 3 };
-            var data2 = new int[] { 1, 2, 3 };
+            var data2 = new int[] { 1, 2, 3 }; // same as line above, easier to understand for some
             var data3 = new[] { 1, 2, 3 };
 
             var data6 = new int[0];
@@ -158,19 +167,19 @@ namespace ArrayConsoleApp
         /// </summary>
         private static void RemoveAtIndex()
         {
-            string[] myArray = { "one", "two", "three", "four", "five" };
+            string[] array = { "one", "two", "three", "four", "five" };
 
 
-            Debug.WriteLine(string.Join(",", myArray));
+            Debug.WriteLine(string.Join(",", array));
 
             int indexToRemove = 1;
-            myArray = myArray.Where((source, index) => index != indexToRemove).ToArray();
+            array = array.Where((source, index) => index != indexToRemove).ToArray();
 
-            Debug.WriteLine(string.Join(",", myArray));
+            Debug.WriteLine(string.Join(",", array));
         }
 
         /// <summary>
-        /// Find an element
+        /// Find an element in an array
         /// </summary>
         private static void FindIndexOfElement()
         {
@@ -400,6 +409,7 @@ namespace ArrayConsoleApp
         /// <summary>
         /// Given a List of string, concatenate and present as an array
         /// </summary>
+        /// <remarks>Yep not arrays to start</remarks>
         private static void Ranger()
         {
             var list = new List<string> { "abc", "def", "ghi" };
@@ -454,7 +464,7 @@ namespace ArrayConsoleApp
 
             Debug.WriteLine("");
 
-            // get only strings
+            // get only strings - @ is to escape reserve keywords
             string[] results = array
                 .Where(@object => @object is string)
                 .Select(@object => @object.ToString())

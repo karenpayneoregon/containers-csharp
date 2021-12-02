@@ -17,7 +17,7 @@ namespace ArrayConsoleApp.Classes
         }
         public static bool In<T>(this T source, params T[] list)
         {
-            if (null == source) throw new ArgumentNullException("source");
+            if (null == source) throw new ArgumentNullException(nameof(source));
 
             return ((IList)list).Contains(source);
 

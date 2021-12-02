@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using ListGenericConsoleApp.Classes;
 using ThirdPartyLibrary.Interfaces;
 
@@ -36,6 +38,12 @@ namespace ListGenericConsoleApp
             {
                 Debug.WriteLine($"{customer.Id, -3:D2}{customer.CountryIdentifier,-3:D2}{customer.CompanyName}");
             }
+        }
+
+        [ModuleInitializer]
+        public static void Init1()
+        {
+            Console.Title = "Working with List";
         }
     }
 }
