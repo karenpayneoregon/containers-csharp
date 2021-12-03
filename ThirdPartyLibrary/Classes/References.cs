@@ -94,5 +94,15 @@ namespace ThirdPartyLibrary.Classes
             new (1,"ANDERSON0001","Anderson Custom Bikes",2),
             new (4,"CAPITAL0001","Capital Road Cycles",3),
         };
+
+        public static List<VendorItem> VendorItems() => new List<VendorItem>()
+        {
+            new () {Id = 0, AccountNumber = "SELECT", DisplayName = "Select", CreditRating = 1},
+            new () {Id = 1, AccountNumber = "ANDERSON0001", DisplayName = "Anderson Custom Bikes", CreditRating = 2},
+            new () {Id = 2, AccountNumber = "BERGERON0001", DisplayName = "Bergeron Off-Roads", CreditRating = 1},
+            new () {Id = 3, AccountNumber = "BICYCLE0001", DisplayName = "Bicycle Specialists", CreditRating = 2},
+            new () {Id = 4, AccountNumber = "CAPITAL0001", DisplayName = "Capital Road Cycles", CreditRating = 3},
+            new () {Id = 5, AccountNumber = "ELECTRON0001", DisplayName = "Electronic Bike Co.", CreditRating = 1}
+        };
     }
 }

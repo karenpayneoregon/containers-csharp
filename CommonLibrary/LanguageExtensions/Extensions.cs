@@ -9,6 +9,7 @@ namespace CommonLibrary.LanguageExtensions
 {
     public static class Extensions
     {
+        public static string ToYesNoString(this bool value) => value ? "Yes" : "No";
         /// <summary>
         /// Add KeyValue pair if key does not already exists in Dictionary
         /// </summary>

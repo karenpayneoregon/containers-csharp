@@ -39,7 +39,7 @@ namespace HashTablesConsoleApp
         private static void VendorIterateKeyValues()
         {
             Hashtable vendorHashtable = VendorHashtable();
-
+            
             foreach (DictionaryEntry entry in vendorHashtable)
             {
                 Debug.WriteLine($"{entry.Key}");
@@ -81,6 +81,67 @@ namespace HashTablesConsoleApp
             }
 
             return vendorHashtable;
+        }
+
+        private static void UpdateValue()
+        {
+            Hashtable Create()
+            {
+                Hashtable vendorHashtable = new();
+                List<VendorItem> vendorItems = References.VendorItems();
+
+                foreach (var item in vendorItems)
+                {
+                    vendorHashtable.Add(item.DisplayName, item);
+                }
+
+                return vendorHashtable;
+            }
+
+            var table = Create();
+            var key = "Capital Road Cycles";
+
+            if (table.ContainsKey(key))
+            {
+                table[key] = "Capital Road Cycles fun fun fun";
+            }
+
+            table.Remove("Select"); // no check, we know it exists
+
+            foreach (DictionaryEntry entry in table)
+            {
+                Debug.WriteLine($"{entry.Key,-21} = {entry.Value}");
+            }
+
+        }
+        private static void RemoveItem()
+        {
+            Hashtable Create()
+            {
+                Hashtable vendorHashtable = new();
+                List<VendorItem> vendorItems = References.VendorItems();
+
+                foreach (var item in vendorItems)
+                {
+                    vendorHashtable.Add(item.DisplayName,item);
+                }
+
+                return vendorHashtable;
+            }
+
+            var table = Create();
+            var key = "Capital Road Cycles";
+
+            if (table.ContainsKey(key))
+            {
+                table.Remove(key);
+                Debug.WriteLine($"{key} has been removed");
+            }
+            else
+            {
+                Debug.WriteLine($"{key} not in table");
+            }
+
         }
 
         [ModuleInitializer]
