@@ -33,7 +33,7 @@ namespace ArrayConsoleApp
             /*
              * Local function/method
              */
-            void Dummy(int[] sender)
+            void WriteJoined(int[] sender)
             {
                 Debug.WriteLine(string.Join("," , sender));
             }
@@ -52,10 +52,10 @@ namespace ArrayConsoleApp
 
             int[] data9 = Enumerable.Repeat(1, 20).ToArray();
 
-            Dummy(new int[2]);
-            Dummy(new int[2] { 1, 2 });
-            Dummy(new int[] { 1, 2 });
-            Dummy(new[] { 1, 2 });
+            WriteJoined(new int[2]);
+            WriteJoined(new int[2] { 1, 2 });
+            WriteJoined(new int[] { 1, 2 });
+            WriteJoined(new[] { 1, 2 });
 
             Debug.WriteLine("");
 
