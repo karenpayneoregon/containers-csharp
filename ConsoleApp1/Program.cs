@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using ConsoleApp1.Classes;
 
 namespace ConsoleApp1
@@ -9,7 +10,8 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            ApplicationMobileClaimsExample();
+
+
         }
 
         /// <summary>

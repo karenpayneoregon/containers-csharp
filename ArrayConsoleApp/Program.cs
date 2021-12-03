@@ -14,10 +14,19 @@ using static System.Globalization.DateTimeFormatInfo;
 
 namespace ArrayConsoleApp
 {
+    public class IndexItem
+    {
+        public int Index { get; set; }
+        public string Text { get; set; }
+
+        public override string ToString() => $"{Index,3:D2} {Text}";
+    }
+
     class Program
     {
         static void Main(string[] args)
         {
+            GetAllDuplicates();
 
         }
 
@@ -475,6 +484,86 @@ namespace ArrayConsoleApp
 
 
 
+
+        }
+
+        /// <summary>
+        /// From a Microsoft Q-A forum question which is an oddball question as usually the
+        /// question is to get a single duplicate e.g. below would be
+        ///
+        /// This is a test
+        /// This is a orange
+        /// 
+        /// https://docs.microsoft.com/en-us/answers/questions/650430/how-to-see-only-duplicate-values-in-listbox.html
+        ///
+        /// Notes
+        /// * we are case sensitive as that is truly getting exact dups
+        /// * the rare case for one char variables e.g. 'g'
+        /// </summary>
+        private static void GetAllDuplicates()
+        {
+            string[] lines = {
+                "This is a test",
+                "This is a apple",
+                "This is a orange",
+                "This is a test",
+                "This is a orange",
+                "This is a test"
+            };
+
+
+            if (lines.ContainsDuplicates())
+            {
+                /*
+                 * Odd
+                 */
+                List<string> duplicates = lines
+                    .GroupBy(line => line)
+                    .Where(g => g.Skip(1).Any())
+                    .SelectMany(g => g)
+                    .ToList();
+
+
+                duplicates.ForEach(item => Debug.WriteLine(item));
+
+                Debug.WriteLine("");
+
+                /*
+                 * Typical
+                 */
+                duplicates = lines.GroupBy(line => line)
+                    .Where(g => g.Count() > 1)
+                    .Select(g => g.Key)
+                    .ToList();
+
+                duplicates.ForEach(item => Debug.WriteLine(item));
+
+                Debug.WriteLine("");
+
+                var indices = lines.Select((value, index) => new { value, index })
+                    .Where(a => string.Equals(a.value, "This is a test"))
+                    .Select(a => a.index).ToList();
+
+                if (indices.Any())
+                {
+                    Debug.WriteLine("Indexes");
+                    indices.ForEach(x => Debug.WriteLine(x));
+                }
+                else
+                {
+                    Debug.WriteLine("None");
+                }
+
+                var duplicates1 = lines
+                    .Select((text, index) => new IndexItem { Index = index, Text = text })
+                    .GroupBy(g => g.Text)
+                    .Where(g => g.Count() > 1).ToList();
+
+            }
+            else
+            {
+                Debug.WriteLine("No duplicates");
+            }
 
         }
 

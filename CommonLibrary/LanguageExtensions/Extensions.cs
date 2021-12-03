@@ -9,7 +9,29 @@ namespace CommonLibrary.LanguageExtensions
 {
     public static class Extensions
     {
-        public static string ToYesNoString(this bool value) => value ? "Yes" : "No";
+        /// <summary>
+        /// Convert bool to Yes or No
+        /// </summary>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static string ToYesNoString(this bool source) => source ? "Yes" : "No";
+
+        /// <summary>
+        /// Determine if there are duplicates in source
+        /// </summary>
+        /// <typeparam name="T">inferred type</typeparam>
+        /// <param name="source">IEnumerable</param>
+        /// <returns>true if duplicates, false no duplicates</returns>
+        /// <remarks>
+        /// Alternate
+        /// if(source.Count != source.Distinct().Count())
+        /// </remarks>
+        public static bool ContainsDuplicates<T>(this IEnumerable<T> source)
+        {
+            var knownKeys = new HashSet<T>();
+            return source.Any(item => !knownKeys.Add(item));
+        }
+
         /// <summary>
         /// Add KeyValue pair if key does not already exists in Dictionary
         /// </summary>

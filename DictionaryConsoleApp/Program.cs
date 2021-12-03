@@ -18,7 +18,7 @@ namespace DictionaryConsoleApp
     {
         static void Main(string[] args)
         {
-            BasicSample2();
+            Merging();
         }
 
         /// <summary>
@@ -71,6 +71,38 @@ namespace DictionaryConsoleApp
             // /api/product/list?dog=221&gender=female&age=4,5,6
             Debug.WriteLine(results);
 
+        }
+        /// <summary>
+        /// Merge two dictionaries, duplicate key aware 
+        /// </summary>
+        private static void Merging()
+        {
+            Dictionary<string, List<int>> dictionary1 = new()
+            {
+                { "item1", new() { 1, 2, 3 } },
+                { "item2", Enumerable.Range(4, 12).ToList() }
+            };
+
+            Dictionary<string, List<int>> dictionary2 = new()
+            {
+                { "item3", new() { 10, 20 } },
+                { "item4", Enumerable.Range(45, 6).ToList() }
+            };
+
+            /*
+             * rename key to ensure merging does not blow up on dup keys
+             */
+            dictionary2.RenameKey("item3", "item1");
+
+            var resultsDictionary = dictionary1
+                .Concat(dictionary2)
+                .ToLookup(kvp => kvp.Key, kvp => kvp.Value)
+                .ToDictionary(kvp => kvp.Key, g => g.First());
+
+            foreach (var item in resultsDictionary)
+            {
+                Debug.WriteLine(item.Key);
+            }
         }
 
         /// <summary>
