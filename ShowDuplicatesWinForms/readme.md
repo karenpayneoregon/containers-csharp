@@ -24,4 +24,4 @@ Get each item and line number
 
 **See also** 
 
-ArraryCode.GetAllDuplicates()
+ArraryCode.[GetAllDuplicates](https://github.com/karenpayneoregon/containers-csharp/blob/master/ArrayConsoleApp/Program.cs#L503:L568)() which gives background to the `why`.

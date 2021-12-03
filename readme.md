@@ -1,6 +1,62 @@
 # About
 
-For teaching purposes
+For teaching about [commonly used collection types](https://docs.microsoft.com/en-us/dotnet/standard/collections/commonly-used-collection-types)
+
+New developers to C# with little to no formal training when needing a collection/container will scour the web for a suitable collection and inevitably find `List<T>` or `Array`.
+
+Dependent on the task, what comes next is
+
+- The container fits the task
+- The container fits the task but is slow performance-wise
+- After review, the container does not fulfill the task completely
+  - Container allows modications to data that should not be modified, meaning an `immutable` vs `mutable`
+  - Allows duplicates where no duplicates are permitted.
+  - Does not work well with other sections of the application e.g. a report requires a `List<T>` and the choice was a `DataTable`
+
+Looking at using a [DataTable](https://docs.microsoft.com/en-us/dotnet/api/system.data.datatable?view=net-6.0) when a [List](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.list-1?view=net-6.0)&lt;T> is needed the average developer hops back on the web and finds a language extension (**Figure 1**) that converts a `DataTable` to a `List`. This solves one problem but may lead to other issues such as time to perform the conversion when response time is critical.
+
+**Note:** Although DataTable is old they still have a place in today's world. See [the following](https://github.com/karenpayneoregon/DataTablesOperationsEvents) for their events and change notification.
+
+In the Visual Studio solution there is an exploration of common collections/containers with advantages and gochas.
+
+This will be followed up with `design patterns`.
+
+
+**Figure 1**
+
+```csharp
+public static List<TSource> DataTableToList<TSource>(this DataTable table) where TSource : new()
+{
+    List<TSource> list = new();
+
+    var typeProperties = typeof(TSource).GetProperties().Select(propertyInfo => new
+    {
+        PropertyInfo = propertyInfo,
+        Type = Nullable.GetUnderlyingType(propertyInfo.PropertyType) ?? propertyInfo.PropertyType
+    }).ToList();
+
+    foreach (var row in table.Rows.Cast<DataRow>())
+    {
+
+        TSource current = new();
+
+        foreach (var typeProperty in typeProperties)
+        {
+            object value = row[typeProperty.PropertyInfo.Name];
+            object safeValue = value is null || DBNull.Value.Equals(value) ? null : Convert.ChangeType(value, typeProperty.Type);
+            typeProperty.PropertyInfo.SetValue(current, safeValue, null);
+        }
+
+        list.Add(current);
+    }
+
+    return list;
+}
+```
+
+This can be avoided by knowing both business requirements along with communication between components in various task.
+
+
 
 
 ## Immutable collections .NET Core (C# 9)
