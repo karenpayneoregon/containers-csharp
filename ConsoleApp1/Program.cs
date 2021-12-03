@@ -10,6 +10,18 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
+            var dictionary = new Dictionary<string, int>
+            {
+                { "something", 5 },
+                { "something else", 15 }
+            };
+
+            foreach (var key in dictionary.Keys)
+            {
+                dictionary[key] -= 1;
+            }
+
+            dictionary = dictionary.ToDictionary(kvp => kvp.Key, kvp => kvp.Value - 1);
 
 
         }

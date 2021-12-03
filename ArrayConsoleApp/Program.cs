@@ -88,184 +88,116 @@ namespace ArrayConsoleApp
         }
 
         /// <summary>
-        /// Find differences between two arrays using Except extension 
+        /// Example for iterating a multi-dimensional
         /// </summary>
-        private static void DifferenceBetweenArrays()
+        private static void MultiDimensional()
         {
-            var array1 = new[] { "A", "B", "C" };
-            var array2 = new[] { "A", "C", "D" };
-
-            var result1 = array2.Except(array1).ToArray();
-
-            foreach (var item in result1)
+            int[,] array =
             {
-                Debug.WriteLine(item);
+                { 1, 2, 3 }, 
+                { 4, 5, 6 }
+            };
+
+            for (var index = array.GetLowerBound(0); index <= array.GetUpperBound(0); index++)
+            {
+                for (var innerIndex= array.GetLowerBound(1); innerIndex <= array.GetUpperBound(1); innerIndex++)
+                {
+                    Debug.Write($"[{index}][{innerIndex}] = {array[index, innerIndex]}   ");
+                }
+
+                Debug.WriteLine("");
             }
 
             Debug.WriteLine("");
 
-            var result2 = array1.Except(array2).ToArray();
+        }
 
-            foreach (var item in result2)
+        /// <summary>
+        /// Well we need to be prepared for multi type arrays
+        /// </summary>
+        private static void MultiTypeArray()
+        {
+            object[] array = 
             {
-                Debug.WriteLine(item);
-            }
+                1, 
+                "Karen", 
+                new Person() {FirstName = "Mary", LastName = "Kennedy"}, 
+                null,
+                true,
+                "Payne"
+            };
 
-            var result3 = array1.Intersect(array2).ToArray();
+            foreach (var item in array)
+            {
+                switch (item)
+                {
+                    case int intItem:
+                        Debug.WriteLine($"int: {intItem}");
+                        break;
+                    case Person person:
+                        Debug.WriteLine($"Person: {person.FullName}");
+                        break;
+                    case null:
+                        Debug.WriteLine("null");
+                        break;
+                    case string stringItem:
+                        Debug.WriteLine($"String: {stringItem}");
+                        break;
+                    default:
+                        Debug.WriteLine("???");
+                        break;
+                }
+            }
 
             Debug.WriteLine("");
 
-            foreach (var item in result3)
-            {
-                Debug.WriteLine(item);
-            }
+            // get only strings - @ is to escape reserve keywords
+            string[] results = array
+                .Where(@object => @object is string)
+                .Select(@object => @object.ToString())
+                .ToArray();
+
+            Debug.WriteLine(string.Join(",", results));
+
+
+
+
+
         }
 
         /// <summary>
-        /// Converting string array to int array
+        /// Demonstrates getting elements using indexers
         /// </summary>
-        private static void StringArrayToIntegerArray()
+        private static void DayNamesIndexing()
         {
-            string[] values = { "", "1", "2", null, "4", "Text" };
+            string[] dayNames = CurrentInfo?.DayNames;
 
-            if (values.AllInt())
-            {
-                Debug.WriteLine("All can be converted");
-            }
-            else
-            {
-                var results1 = values.GetNonIntegerIndexes();
+            /*
+             * Using indexers skip first element 'Monday' take up to Friday thus work days
+             */
+            string[] workDays = dayNames?[1..6];
 
-                Debug.WriteLine(string.Join(",", values.JoinWithNulls()));
-                Debug.WriteLine($"GetNonIntegerIndexes(): {string.Join(",", results1)}");
-            }
-
-            var result2 = values.ToIntegerArray();
-
-            Debug.WriteLine($"ToIntegerArray(): {string.Join(",", result2)}");
-
-
-            Debug.WriteLine("");
-
-            values[0] = "0";
-            values[3] = "45";
-
-            if (!values.AllInt())
-            {
-                var results = values.GetNonIntegerIndexes();
-
-                Debug.WriteLine(string.Join(",", values));
-                Debug.WriteLine(string.Join(",", results));
-            }
-            else
-            {
-                Debug.WriteLine("All can be converted");
-            }
-        }
-
-        /// <summary>
-        /// TODO - move out of project
-        /// </summary>
-        private static void RelativePath()
-        {
-            // relativeUri.ToString().Replace('/',Path.DirectorySeparatorChar);
-            var relativePath = Path.GetRelativePath(
-                @"C:\Program Files\Dummy Folder\MyProgram",
-                @"C:\Program Files\Dummy Folder\MyProgram\Data\datafile1.dat");
-            Debug.WriteLine(relativePath);
-        }
-
-        // place breakpoint here and examine each array
-
-        /// <summary>
-        /// Some developer may like a Push method
-        /// Get first three day names, Sunday, Monday, Tuesday and append/push Wednesday
-        /// </summary>
-        private static void Push()
-        {
-            var days = CurrentInfo.DayNames;
-
-            var days1 = days[..3];
-            ArrayHelpers.Push(ref days1, "Wednesday");
-
-            foreach (var day in days1)
+            foreach (var day in workDays)
             {
                 Debug.WriteLine(day);
             }
 
-        }
-        /// <summary>
-        /// Remove element at index, see also <seealso cref="FindIndexOfElement"/>
-        /// </summary>
-        private static void RemoveAtIndex()
-        {
-            string[] array = { "one", "two", "three", "four", "five" };
-
-
-            Debug.WriteLine(string.Join(",", array));
-
-            int indexToRemove = 1;
-            array = array.Where((source, index) => index != indexToRemove).ToArray();
-
-            Debug.WriteLine(string.Join(",", array));
-        }
-
-        /// <summary>
-        /// Find an element in an array
-        /// </summary>
-        private static void FindIndexOfElement()
-        {
-            var days = CurrentInfo.DayNames;
-            var dayName = DateTime.Now.DayOfWeek.ToString();
-
-            int index = Array.FindIndex(days, item => item == dayName);
-            Debug.WriteLine($"Find {dayName} -> index {index} days[{days[index]}]");
-            
-            var test = 1.In(new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 });
-            Debug.WriteLine(test);
-
-        }
-
-        /// <summary>
-        /// String array find case insensitive
-        /// </summary>
-        private static void FindIndexCaseInsensitive()
-        {
-            string[] array = { "hello", "Hi", "bye", "welcome", "hell" } ;
-            int index = Array.FindIndex(array, t => t.IndexOf("hi", StringComparison.InvariantCultureIgnoreCase) >= 0);
-
-            Debug.WriteLine(array[index]);
-        }
-
-
-        /// <summary>
-        /// Get a range of elements
-        ///
-        /// 1. Using a language extension
-        /// 2. Using Skip/Take
-        /// 
-        /// </summary>
-        private static void SubArray()
-        {
-            int[] array = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-            int length = 3;
-
-            int index = Array.FindIndex(array, item => item == 4);
-
-            array = array.SubArray(index, length);
-            Debug.WriteLine($"Extension: {string.Join(",", array)}");
+            Debug.WriteLine("");
 
             /*
-             * Create a new array on the fly which matches the original array as
-             * the original is smaller now from SubArray extension
+             * Display element index and element values
              */
-            var array1 = new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 }.Skip(index).Take(3).ToArray();
+            var indexed = dayNames!
+                .Select((name, index) => new DayIndexer { Name = name, Index = index });
 
-            Debug.WriteLine($"Skip/Take: {string.Join(",", array1)}");
+            foreach (var dayItem in indexed)
+            {
+                Debug.WriteLine($"{dayItem.Index,-3}{dayItem.Name}");
+            }
 
+            Debug.WriteLine("");
 
         }
-
 
         /// <summary>
         /// Idea here is to create a string array of hours to present in a front-end control e.g. dropdown or ComboBox
@@ -380,63 +312,155 @@ namespace ArrayConsoleApp
         }
 
         /// <summary>
-        /// Example for iterating a multi-dimensional
+        /// Find an element in an array
         /// </summary>
-        private static void MultiDimensional()
+        private static void FindIndexOfElement()
         {
-            int[,] array =
-            {
-                { 1, 2, 3 }, 
-                { 4, 5, 6 }
-            };
+            var days = CurrentInfo.DayNames;
+            var dayName = DateTime.Now.DayOfWeek.ToString();
 
-            for (var index = array.GetLowerBound(0); index <= array.GetUpperBound(0); index++)
-            {
-                for (var innerIndex= array.GetLowerBound(1); innerIndex <= array.GetUpperBound(1); innerIndex++)
-                {
-                    Debug.Write($"[{index}][{innerIndex}] = {array[index, innerIndex]}   ");
-                }
-
-                Debug.WriteLine("");
-            }
-
-            Debug.WriteLine("");
+            int index = Array.FindIndex(days, item => item == dayName);
+            Debug.WriteLine($"Find {dayName} -> index {index} days[{days[index]}]");
+            
+            var test = 1.In(new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 });
+            Debug.WriteLine(test);
 
         }
 
         /// <summary>
-        /// Demonstrates getting elements using indexers
+        /// String array find case insensitive
         /// </summary>
-        private static void DayNamesIndexing()
+        private static void FindIndexCaseInsensitive()
         {
-            string[] dayNames = CurrentInfo?.DayNames;
+            string[] array = { "hello", "Hi", "bye", "welcome", "hell" } ;
+            int index = Array.FindIndex(array, t => t.IndexOf("hi", StringComparison.InvariantCultureIgnoreCase) >= 0);
 
-            /*
-             * Using indexers skip first element 'Monday' take up to Friday thus work days
-             */
-            string[] workDays = dayNames?[1..6];
+            Debug.WriteLine(array[index]);
+        }
 
-            foreach (var day in workDays)
+        /// <summary>
+        /// Find differences between two arrays using Except extension 
+        /// </summary>
+        private static void DifferenceBetweenArrays()
+        {
+            var array1 = new[] { "A", "B", "C" };
+            var array2 = new[] { "A", "C", "D" };
+
+            var result1 = array2.Except(array1).ToArray();
+
+            foreach (var item in result1)
             {
-                Debug.WriteLine(day);
+                Debug.WriteLine(item);
             }
 
             Debug.WriteLine("");
 
-            /*
-             * Display element index and element values
-             */
-            var indexed = dayNames!
-                .Select((name, index) => new DayIndexer { Name = name, Index = index });
+            var result2 = array1.Except(array2).ToArray();
 
-            foreach (var dayItem in indexed)
+            foreach (var item in result2)
             {
-                Debug.WriteLine($"{dayItem.Index,-3}{dayItem.Name}");
+                Debug.WriteLine(item);
             }
 
+            var result3 = array1.Intersect(array2).ToArray();
+
             Debug.WriteLine("");
+
+            foreach (var item in result3)
+            {
+                Debug.WriteLine(item);
+            }
+        }
+
+        /// <summary>
+        /// Converting string array to int array
+        /// </summary>
+        private static void StringArrayToIntegerArray()
+        {
+            string[] values = { "", "1", "2", null, "4", "Text" };
+
+            if (values.AllInt())
+            {
+                Debug.WriteLine("All can be converted");
+            }
+            else
+            {
+                var results1 = values.GetNonIntegerIndexes();
+
+                Debug.WriteLine(string.Join(",", values.JoinWithNulls()));
+                Debug.WriteLine($"GetNonIntegerIndexes(): {string.Join(",", results1)}");
+            }
+
+            var result2 = values.ToIntegerArray();
+
+            Debug.WriteLine($"ToIntegerArray(): {string.Join(",", result2)}");
+
+
+            Debug.WriteLine("");
+
+            values[0] = "0";
+            values[3] = "45";
+
+            if (!values.AllInt())
+            {
+                var results = values.GetNonIntegerIndexes();
+
+                Debug.WriteLine(string.Join(",", values));
+                Debug.WriteLine(string.Join(",", results));
+            }
+            else
+            {
+                Debug.WriteLine("All can be converted");
+            }
+        }
+
+        // place breakpoint here and examine each array
+
+        /// <summary>
+        /// Remove element at index, see also <seealso cref="FindIndexOfElement"/>
+        /// </summary>
+        private static void RemoveAtIndex()
+        {
+            string[] array = { "one", "two", "three", "four", "five" };
+
+
+            Debug.WriteLine(string.Join(",", array));
+
+            int indexToRemove = 1;
+            array = array.Where((source, index) => index != indexToRemove).ToArray();
+
+            Debug.WriteLine(string.Join(",", array));
+        }
+
+
+        /// <summary>
+        /// Get a range of elements
+        ///
+        /// 1. Using a language extension
+        /// 2. Using Skip/Take
+        /// 
+        /// </summary>
+        private static void SubArray()
+        {
+            int[] array = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+            int length = 3;
+
+            int index = Array.FindIndex(array, item => item == 4);
+
+            array = array.SubArray(index, length);
+            Debug.WriteLine($"Extension: {string.Join(",", array)}");
+
+            /*
+             * Create a new array on the fly which matches the original array as
+             * the original is smaller now from SubArray extension
+             */
+            var array1 = new[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 }.Skip(index).Take(3).ToArray();
+
+            Debug.WriteLine($"Skip/Take: {string.Join(",", array1)}");
+
 
         }
+
 
         /// <summary>
         /// Given a List of string, concatenate and present as an array
@@ -455,59 +479,6 @@ namespace ArrayConsoleApp
             Debug.WriteLine($"{string.Join(",", subList1.ToArray())}");
             Debug.WriteLine($"{string.Join(",", subList2.ToArray())}");
             Debug.WriteLine("");
-        }
-
-        /// <summary>
-        /// Well we need to be prepared for multi type arrays
-        /// </summary>
-        private static void MultiTypeArray()
-        {
-            object[] array = 
-            {
-                1, 
-                "Karen", 
-                new Person() {FirstName = "Mary", LastName = "Kennedy"}, 
-                null,
-                true,
-                "Payne"
-            };
-
-            foreach (var item in array)
-            {
-                switch (item)
-                {
-                    case int intItem:
-                        Debug.WriteLine($"int: {intItem}");
-                        break;
-                    case Person person:
-                        Debug.WriteLine($"Person: {person.FullName}");
-                        break;
-                    case null:
-                        Debug.WriteLine("null");
-                        break;
-                    case string stringItem:
-                        Debug.WriteLine($"String: {stringItem}");
-                        break;
-                    default:
-                        Debug.WriteLine("???");
-                        break;
-                }
-            }
-
-            Debug.WriteLine("");
-
-            // get only strings - @ is to escape reserve keywords
-            string[] results = array
-                .Where(@object => @object is string)
-                .Select(@object => @object.ToString())
-                .ToArray();
-
-            Debug.WriteLine(string.Join(",", results));
-
-
-
-
-
         }
 
         /// <summary>
@@ -588,6 +559,36 @@ namespace ArrayConsoleApp
                 Debug.WriteLine("No duplicates");
             }
 
+        }
+
+        /// <summary>
+        /// Some developer may like a Push method
+        /// Get first three day names, Sunday, Monday, Tuesday and append/push Wednesday
+        /// </summary>
+        private static void Push()
+        {
+            var days = CurrentInfo.DayNames;
+
+            var days1 = days[..3];
+            ArrayHelpers.Push(ref days1, "Wednesday");
+
+            foreach (var day in days1)
+            {
+                Debug.WriteLine(day);
+            }
+
+        }
+
+        /// <summary>
+        /// TODO - move out of project
+        /// </summary>
+        private static void RelativePath()
+        {
+            // relativeUri.ToString().Replace('/',Path.DirectorySeparatorChar);
+            var relativePath = Path.GetRelativePath(
+                @"C:\Program Files\Dummy Folder\MyProgram",
+                @"C:\Program Files\Dummy Folder\MyProgram\Data\datafile1.dat");
+            Debug.WriteLine(relativePath);
         }
 
         [ModuleInitializer]

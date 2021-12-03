@@ -12,7 +12,9 @@ namespace StructConsoleApp
     {
         static void Main(string[] args)
         {
-            Sample1();
+            //Sample1();
+
+
         }
 
         private static void Sample1()
@@ -36,6 +38,12 @@ namespace StructConsoleApp
             Debug.WriteLine(referrerInfo2.Item.Value);
             Debug.WriteLine(referrerInfo2);
 
+        }
+
+        private static void DefaultValueDemo()
+        {
+            rcEnglish rc = new rcEnglish();
+            Debug.WriteLine(rc.Continue);
         }
 
         private static void StructureOrClass()
