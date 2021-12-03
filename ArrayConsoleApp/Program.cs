@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -11,22 +12,78 @@ using CommonLibrary.Classes;
 using CommonLibrary.Classes.Generics;
 using CommonLibrary.LanguageExtensions;
 using static System.Globalization.DateTimeFormatInfo;
+using ImageHelpers = ArrayConsoleApp.Classes.ImageHelpers;
 
 namespace ArrayConsoleApp
 {
-    public class IndexItem
-    {
-        public int Index { get; set; }
-        public string Text { get; set; }
-
-        public override string ToString() => $"{Index,3:D2} {Text}";
-    }
-
     class Program
     {
         static void Main(string[] args)
         {
-            GetAllDuplicates();
+            InitializeArrays();
+
+        }
+
+        /// <summary>
+        /// Various ways to init arrays
+        /// </summary>
+        private static void InitializeArrays()
+        {
+
+            /*
+             * Local function/method
+             */
+            void Dummy(int[] sender)
+            {
+                Debug.WriteLine(string.Join("," , sender));
+            }
+
+            var data0 = new int[3];
+            var data1 = new int[3] { 1, 2, 3 };
+            var data2 = new int[] { 1, 2, 3 }; // same as line above, easier to understand for some
+            var data3 = new[] { 1, 2, 3 };
+
+            var data6 = new int[0];
+            var data6a = Array.Empty<int>();
+
+            var data7 = new int[] { };
+
+            int[] data8 = Enumerable.Range(0, 9).ToArray();
+
+            int[] data9 = Enumerable.Repeat(1, 20).ToArray();
+
+            Dummy(new int[2]);
+            Dummy(new int[2] { 1, 2 });
+            Dummy(new int[] { 1, 2 });
+            Dummy(new[] { 1, 2 });
+
+            Debug.WriteLine("");
+
+            var anonymous = Enumerable.Range(0, 9)
+                .Select((value, index) => new { Value = value, Index = index })
+                .ToArray();
+
+            foreach (var item in anonymous)
+            {
+                Debug.WriteLine($"{item.Index,-3}{item.Value}");
+            }
+
+            Debug.WriteLine("");
+
+            var monthNames = Enumerable.Range(1, 12)
+                .Select((index) => DateTimeFormatInfo.CurrentInfo.GetMonthName(index))
+                .ToList();
+
+            var monthsIndexed = monthNames
+                .Select((name, index) => new {Name = name, Index = index +1 })
+                .ToList();
+
+            foreach (var monthItem in monthsIndexed)
+            {
+                Debug.WriteLine($"{monthItem.Index, -3}{monthItem.Name}");
+            }
+
+
 
         }
 
@@ -118,41 +175,7 @@ namespace ArrayConsoleApp
             Debug.WriteLine(relativePath);
         }
 
-        /// <summary>
-        /// Various ways to init arrays
-        /// </summary>
-        private static void InitializeArrays()
-        {
-
-            /*
-             * Local function/method
-             */
-            void Dummy(int[] sender)
-            {
-                Debug.WriteLine(string.Join("," , sender));
-            }
-
-            var data0 = new int[3];
-            var data1 = new int[3] { 1, 2, 3 };
-            var data2 = new int[] { 1, 2, 3 }; // same as line above, easier to understand for some
-            var data3 = new[] { 1, 2, 3 };
-
-            var data6 = new int[0];
-            var data6a = Array.Empty<int>();
-
-            var data7 = new int[] { };
-
-            int[] data8 = Enumerable.Range(0, 9).ToArray();
-
-            int[] data9 = Enumerable.Repeat(1, 20).ToArray();
-
-            Dummy(new int[2]);
-            Dummy(new int[2] { 1, 2 });
-            Dummy(new int[] { 1, 2 });
-            Dummy(new[] { 1, 2 });
-            
-
-        } // place breakpoint here and examine each array
+        // place breakpoint here and examine each array
 
         /// <summary>
         /// Some developer may like a Push method

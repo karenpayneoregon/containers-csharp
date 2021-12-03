@@ -124,6 +124,7 @@ namespace CommonLibrary.LanguageExtensions
                 foreach (var typeProperty in typeProperties)
                 {
                     object value = row[typeProperty.PropertyInfo.Name];
+                    // ReSharper disable once ConditionIsAlwaysTrueOrFalse
                     object safeValue = value is null || DBNull.Value.Equals(value) ? null : Convert.ChangeType(value, typeProperty.Type);
                     typeProperty.PropertyInfo.SetValue(current, safeValue, null);
                 }
