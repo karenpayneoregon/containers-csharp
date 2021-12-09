@@ -12,9 +12,13 @@ namespace StructConsoleApp
     {
         static void Main(string[] args)
         {
-            //Sample1();
+            EmployeeData integer = new (21);
+            Results(integer);
+        }
 
-
+        private static void Results(EmployeeData integer)
+        {
+            //integer.Id = 9;
         }
 
         private static void Sample1()

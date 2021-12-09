@@ -20,7 +20,7 @@ namespace ArrayConsoleApp
     {
         static void Main(string[] args)
         {
-            InitializeArrays();
+            GoodUseOfArray();
 
         }
 
@@ -238,8 +238,8 @@ namespace ArrayConsoleApp
         /// </summary>
         private static void HoursExtended()
         {
-            var hours = Hours.Range(TimeIncrement.Quarterly);
-            var hourItemList = Hours.HourItems(hours);
+            string[] hours = Hours.Range(TimeIncrement.Quarterly);
+            List<HourItem> hourItemList = Hours.HourItems(hours);
             Console.WriteLine("Place breakpoint here to examine hourItemList");
         }
 

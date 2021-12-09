@@ -1,4 +1,4 @@
-﻿namespace ArrayConsoleApp.Classes
+﻿namespace ClassWorkConsoleApp.Classes
 {
     class Person
     {

@@ -8,14 +8,14 @@ namespace ClassWorkConsoleApp
     {
         static void Main(string[] args)
         {
-            ArrayCode arrayOperations = new ();
+
+            ArrayCode arrayOperations = new();
             arrayOperations.Basics();
 
-            ListCode listOperations = new();
-            listOperations.Basics();
-            
+            //ListCode listOperations = new();
+            //listOperations.Basics();
 
-            Console.ReadLine();
+
         }
     }
 }
