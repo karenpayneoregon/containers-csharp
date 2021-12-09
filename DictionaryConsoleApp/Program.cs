@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -18,7 +19,10 @@ namespace DictionaryConsoleApp
     {
         static void Main(string[] args)
         {
-            Merging();
+            //Merging();
+            DirectoryTraverse();
+
+
         }
 
         /// <summary>
@@ -162,6 +166,71 @@ namespace DictionaryConsoleApp
             }
             
         }
+
+        private static readonly List<string> folderList = new ();
+        private static Dictionary<int, string> folderDictionary = new();
+        /// <summary>
+        /// This code sample traverses a directory backwards storing paths in a list
+        /// followed by reversing the list so the root folder is first then adds the
+        /// list to a Dictionary where the key is the index of the folder and the
+        /// folder name.
+        /// </summary>
+        /// <remarks>
+        /// The developer running this code may not have permissions to see the base folder
+        /// and if so change the path to one which you have permissions.
+        ///
+        /// For out in the wild it would be prudent to use a try-catch.
+        /// 
+        /// </remarks>
+        private static void DirectoryTraverse()
+        {
+            string path = @"\\devweb07\HTTP\headfoot\bootstrapIcons\1.2.0\font\fonts";
+            
+            if (Directory.Exists(path))
+            {
+                DirectoryHelper.TraverseFolder += DirectoryHelperOnTraverseFolder;
+                DirectoryHelper.TraversePath(path);
+                DirectoryHelper.TraverseFolder -= DirectoryHelperOnTraverseFolder;
+
+                ImmutableDictionary<int, string> dictImmutableDictionary = GetImmutable();
+                foreach (var kvp in dictImmutableDictionary)
+                {
+                    Debug.WriteLine($"{kvp.Key,-3}{kvp.Value}");
+
+                }
+                
+            }
+            else
+            {
+                Debug.WriteLine($"Directory not found: {path}");
+            }
+
+        }
+        private static void DirectoryHelperOnTraverseFolder(string sender)
+        {
+            if (sender == DirectoryHelper.DoneMessage)
+            {
+                folderList.Reverse(0, folderList.Count);
+
+
+                for (int index = 0; index < folderList.Count; index++)
+                {
+                    folderDictionary.Add(index, folderList[index]);
+                }
+            }
+            else
+            {
+                folderList.Add(sender);
+            }
+
+        }
+
+        /// <summary>
+        /// Return an immutable dictionary from a mutable dictionary
+        /// </summary>
+        /// <returns></returns>
+        public static ImmutableDictionary<int, string> GetImmutable() => 
+            folderDictionary.ToImmutableDictionary();
 
         /// <summary>
         /// The Dictionary resides in <seealso cref="CarsService"/> which creates
