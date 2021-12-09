@@ -14,9 +14,15 @@ namespace CommonLibrary.LanguageExtensions
         /// </summary>
         /// <param name="sender">array to act on</param>
         /// <param name="replacement">value to use for empty/null element</param>
-        /// <returns></returns>
-        public static string[] JoinWithNulls(this string[] sender, string replacement = "(null)") => 
-            sender.Select(token => string.IsNullOrWhiteSpace(token) ? replacement : token).ToArray();
+        /// <returns>
+        /// Comma delimited string
+        /// </returns>
+        public static string JoinWithNulls(this string[] sender, string replacement = "(empty)") => 
+            string.Join(",",sender.Select(token => string.IsNullOrWhiteSpace(token) ? 
+            replacement : 
+            token).ToArray());
+
+        public static string[] ToStringArray(this int?[] sender) => sender.Select(x => x.ToString()).ToArray();
 
 
         #region int convert methods

@@ -56,6 +56,7 @@ namespace CommonLibrary.LanguageExtensions
         public static bool TryRemove<TKey, TValue>(this Dictionary<TKey, TValue> dictionary, TKey key, out TValue value)
         {
             var isRemoved = dictionary.TryGetValue(key, out value);
+
             if (isRemoved)
             {
                 dictionary.Remove(key);

@@ -20,8 +20,65 @@ namespace ArrayConsoleApp
     {
         static void Main(string[] args)
         {
-            GoodUseOfArray();
 
+        }
+
+        /// <summary>
+        /// contacts array is is strongly typed meaning it's scope exceeds this method
+        /// </summary>
+        private static void ExplicitTypedArray()
+        {
+            SingleContact[] contacts =
+            {
+                new()
+                {
+                    Name = "Eugene Jones",
+                    PhoneNumbers = new[] { "206-555-0108", "425-555-0001" }
+                },
+                new()
+                {
+                    Name = "Mary Smith",
+                    PhoneNumbers = new[] { "650-555-0199" }
+                }
+            };
+
+            foreach (var contact in contacts)
+            {
+                Debug.WriteLine($"{contact.Name}");
+                foreach (var phoneNumber in contact.PhoneNumbers)
+                {
+                    Debug.WriteLine($"\t{phoneNumber}");
+                }
+            }
+        }
+
+        /// <summary>
+        /// contacts array is anonymous which means scoped to this method
+        /// </summary>
+        private static void ImplicitlyTypedArraysInObjectInitializers()
+        {
+            var contacts = new[]
+            {
+                new
+                {
+                    Name = "Eugene Jones",
+                    PhoneNumbers = new[] { "206-555-0108", "425-555-0001" }
+                },
+                new
+                {
+                    Name = "Mary Smith",
+                    PhoneNumbers = new[] { "650-555-0199" }
+                }
+            };
+
+            foreach (var contact in contacts)
+            {
+                Debug.WriteLine($"{contact.Name}");
+                foreach (var phoneNumber in contact.PhoneNumbers)
+                {
+                    Debug.WriteLine($"\t{phoneNumber}");
+                }
+            }
         }
 
         /// <summary>
@@ -579,6 +636,8 @@ namespace ArrayConsoleApp
 
         }
 
+        #region Not part of the lesson plan
+
         /// <summary>
         /// TODO - move out of project
         /// </summary>
@@ -589,6 +648,18 @@ namespace ArrayConsoleApp
                 @"C:\Program Files\Dummy Folder\MyProgram",
                 @"C:\Program Files\Dummy Folder\MyProgram\Data\datafile1.dat");
             Debug.WriteLine(relativePath);
+        }
+
+        #endregion
+
+        private static void JoinWithNulls()
+        {
+            string[] namesArray = new[] { "Karen", null, "Lisa", "Vince", null};
+            Debug.WriteLine(namesArray.JoinWithNulls());
+
+            int?[] nullableIntArray = { 1, 2, null, 4, 5 };
+            var result = nullableIntArray.ToStringArray().JoinWithNulls();
+            Debug.WriteLine(result);
         }
 
         [ModuleInitializer]
