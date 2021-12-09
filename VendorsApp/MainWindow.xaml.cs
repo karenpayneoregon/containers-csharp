@@ -11,7 +11,7 @@ namespace VendorsApp
         {
             InitializeComponent();
 
-            VendorModel vm = new VendorModel();
+            VendorModel vm = new();
             DataContext = vm;
         }
 
