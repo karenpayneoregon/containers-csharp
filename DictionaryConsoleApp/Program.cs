@@ -210,13 +210,16 @@ namespace DictionaryConsoleApp
         {
             if (sender == DirectoryHelper.DoneMessage)
             {
+                /*
+                 * Current list is deep to shallow, we want to reverse the order
+                 */
                 folderList.Reverse(0, folderList.Count);
-
-
+                
                 for (int index = 0; index < folderList.Count; index++)
                 {
                     folderDictionary.Add(index, folderList[index]);
                 }
+
             }
             else
             {
@@ -229,6 +232,10 @@ namespace DictionaryConsoleApp
         /// Return an immutable dictionary from a mutable dictionary
         /// </summary>
         /// <returns></returns>
+        /// <remarks>
+        /// Built in generic method
+        /// https://docs.microsoft.com/en-us/dotnet/api/system.collections.objectmodel.readonlydictionary-2?redirectedfrom=MSDN&view=net-6.0
+        /// </remarks>
         public static ImmutableDictionary<int, string> GetImmutable() => 
             folderDictionary.ToImmutableDictionary();
 
