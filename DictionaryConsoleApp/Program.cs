@@ -20,7 +20,8 @@ namespace DictionaryConsoleApp
         static void Main(string[] args)
         {
             //Merging();
-            DirectoryTraverse();
+            BasicSample2();
+            //DirectoryTraverse();
 
 
         }
@@ -85,6 +86,9 @@ namespace DictionaryConsoleApp
             {
                 Debug.WriteLine($"{kvp.Key} Values: {string.Join(",", kvp.Value)}");
             }
+
+            field.AddSafe("item1", new() { 1, 2, 3 });  // false
+            field.AddSafe("item3", new() { 1, 2, 3, 4 });
 
             Debug.WriteLine("");
 

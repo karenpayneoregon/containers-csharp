@@ -20,7 +20,7 @@ namespace ArrayConsoleApp
     {
         static void Main(string[] args)
         {
-
+            GenericLastElement();
         }
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace ArrayConsoleApp
         {
             SingleContact[] contacts =
             {
-                new()
+                new SingleContact()
                 {
                     Name = "Eugene Jones",
                     PhoneNumbers = new[] { "206-555-0108", "425-555-0001" }
@@ -139,9 +139,7 @@ namespace ArrayConsoleApp
             {
                 Debug.WriteLine($"{monthItem.Index, -3}{monthItem.Name}");
             }
-
-
-
+            
         }
 
         /// <summary>
@@ -215,11 +213,7 @@ namespace ArrayConsoleApp
                 .ToArray();
 
             Debug.WriteLine(string.Join(",", results));
-
-
-
-
-
+            
         }
 
         /// <summary>
@@ -252,8 +246,33 @@ namespace ArrayConsoleApp
                 Debug.WriteLine($"{dayItem.Index,-3}{dayItem.Name}");
             }
 
-            Debug.WriteLine("");
+            var indexedArray = indexed.ToArray();
 
+            Debug.WriteLine($"Last in array 1: {indexed.ToArray()[^1].Name}");  // IEnumerable to array
+            Debug.WriteLine($"Last in array 2: {indexedArray.GetLast().Name}"); // array
+            Debug.WriteLine($"Last in array 3: {indexed.GetLast().Name}");  // IEnumerable
+
+
+        }
+
+        private static void GenericLastElement()
+        {
+            string[] names = { "Anne", "Ben", "Carrie", "Dean" };
+
+            int[] numbers = { 1, 2, 3, 4, 5 };
+
+            DateTime[] dates = { new (2021, 1, 1), new (2021, 1, 2), new (2021, 1, 3) };
+
+            SingleContact[] contacts =
+            {
+                new () { Name = "Eugene Jones", PhoneNumbers = new[] { "206-555-0108", "425-555-0001" } }, 
+                new() { Name = "Mary Smith", PhoneNumbers = new[] { "650-555-0199" } }
+            };
+
+            Debug.WriteLine($"   Last name: {names.GetLast()}");
+            Debug.WriteLine($" Last number: {numbers.GetLast()}");
+            Debug.WriteLine($"   Last Date: {dates.GetLast():d}");
+            Debug.WriteLine($"Last Contact: {contacts.GetLast().Name}");
         }
 
         /// <summary>

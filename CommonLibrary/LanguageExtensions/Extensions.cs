@@ -134,5 +134,11 @@ namespace CommonLibrary.LanguageExtensions
 
             return list;
         }
+
+
+
+        public static T GetLast<T>(this List<T> source) => source[^1];
+        public static T GetLast<T>(this IEnumerable<T> source) => source.Last(); // redundant but is constant with others
+        public static T GetLast<T>(this T[] source) => source[^1];
     }
 }
