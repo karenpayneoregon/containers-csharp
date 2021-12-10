@@ -97,6 +97,29 @@ namespace CommonLibrary.LanguageExtensions
             }
         }
 
+        /// <summary>
+        /// Add key if not exists
+        /// </summary>
+        /// <typeparam name="TKey">Key to add</typeparam>
+        /// <typeparam name="TValue">Value for key</typeparam>
+        /// <param name="dictionary"></param>
+        /// <param name="key">Key</param>
+        /// <returns>new if not exists else existing value</returns>
+        /// <remarks>
+        /// https://codeblog.jonskeet.uk/2008/02/05/a-simple-extension-method-but-a-beautiful-one/
+        /// </remarks>
+        public static TValue GetOrCreate<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key) where TValue : new()
+        {
+
+            if (!dictionary.TryGetValue(key, out var itemValue))
+            {
+                itemValue = new TValue();
+                dictionary[key] = itemValue;
+            }
+
+            return itemValue;
+        }
+
         public static IOrderedEnumerable<Car> Ordering(this IGrouping<string, Car> source)
             => source.OrderBy(item => item.Model).ThenBy(item => item.ProductionDate.Month).ThenBy(item => item.ProductionDate.Day);
 

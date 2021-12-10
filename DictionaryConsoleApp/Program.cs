@@ -20,10 +20,20 @@ namespace DictionaryConsoleApp
         static void Main(string[] args)
         {
             //Merging();
-            BasicSample2();
+            //BasicSample2();
             //DirectoryTraverse();
+        }
 
-
+        private static void GenericAdd()
+        {
+            string[] someText = { "Karen", "Vince", "Lisa", "Bill" };
+            var dict = new Dictionary<string, int>();
+            int index = 1;
+            foreach (string word in someText)
+            {
+                dict[word] = dict.GetOrCreate(word) + index;
+                index++;
+            }
         }
 
         /// <summary>
