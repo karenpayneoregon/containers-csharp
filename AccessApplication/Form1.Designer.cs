@@ -30,15 +30,17 @@ namespace AccessApplication
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.ListButton = new System.Windows.Forms.Button();
             this.TableButton = new System.Windows.Forms.Button();
             this.ConnectButton = new System.Windows.Forms.Button();
             this.CategoriesComboBox = new System.Windows.Forms.ComboBox();
-            this.ListButton = new System.Windows.Forms.Button();
+            this.GetCurrentButton = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.GetCurrentButton);
             this.panel1.Controls.Add(this.ListButton);
             this.panel1.Controls.Add(this.TableButton);
             this.panel1.Controls.Add(this.ConnectButton);
@@ -47,6 +49,16 @@ namespace AccessApplication
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(591, 43);
             this.panel1.TabIndex = 0;
+            // 
+            // ListButton
+            // 
+            this.ListButton.Location = new System.Drawing.Point(176, 9);
+            this.ListButton.Name = "ListButton";
+            this.ListButton.Size = new System.Drawing.Size(75, 23);
+            this.ListButton.TabIndex = 2;
+            this.ListButton.Text = "List";
+            this.ListButton.UseVisualStyleBackColor = true;
+            this.ListButton.Click += new System.EventHandler(this.ListButton_Click);
             // 
             // TableButton
             // 
@@ -77,15 +89,16 @@ namespace AccessApplication
             this.CategoriesComboBox.Size = new System.Drawing.Size(148, 23);
             this.CategoriesComboBox.TabIndex = 1;
             // 
-            // ListButton
+            // GetCurrentButton
             // 
-            this.ListButton.Location = new System.Drawing.Point(176, 9);
-            this.ListButton.Name = "ListButton";
-            this.ListButton.Size = new System.Drawing.Size(75, 23);
-            this.ListButton.TabIndex = 2;
-            this.ListButton.Text = "List";
-            this.ListButton.UseVisualStyleBackColor = true;
-            this.ListButton.Click += new System.EventHandler(this.ListButton_Click);
+            this.GetCurrentButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.GetCurrentButton.Location = new System.Drawing.Point(504, 9);
+            this.GetCurrentButton.Name = "GetCurrentButton";
+            this.GetCurrentButton.Size = new System.Drawing.Size(75, 23);
+            this.GetCurrentButton.TabIndex = 3;
+            this.GetCurrentButton.Text = "Current";
+            this.GetCurrentButton.UseVisualStyleBackColor = true;
+            this.GetCurrentButton.Click += new System.EventHandler(this.GetCurrentButton_Click);
             // 
             // Form1
             // 
@@ -109,6 +122,7 @@ namespace AccessApplication
         private System.Windows.Forms.ComboBox CategoriesComboBox;
         private System.Windows.Forms.Button TableButton;
         private System.Windows.Forms.Button ListButton;
+        private System.Windows.Forms.Button GetCurrentButton;
     }
 }
 
