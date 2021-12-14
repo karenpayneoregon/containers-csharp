@@ -22,13 +22,19 @@ namespace DictionaryConsoleApp
             //Merging();
             //BasicSample2();
             //DirectoryTraverse();
+
+            BasicSample2();
+
         }
 
         private static void GenericAdd()
         {
             string[] someText = { "Karen", "Vince", "Lisa", "Bill" };
+            
             var dict = new Dictionary<string, int>();
+            
             int index = 1;
+
             foreach (string word in someText)
             {
                 dict[word] = dict.GetOrCreate(word) + index;
@@ -44,7 +50,7 @@ namespace DictionaryConsoleApp
         {
             string name = "Jane Doe";
 
-            Dictionary<string, DateTime> users = new()
+            Dictionary<string, DateTime> users = new ()
             {
                 { "John Doe", new DateTime(1956, 3, 12) },
                 { "Jane Doe", new DateTime(2000, 5, 29) },
@@ -163,19 +169,26 @@ namespace DictionaryConsoleApp
 
             Debug.WriteLine("");
 
+
+
+            List<Category> categoriesFromSomePlace = File.ReadAllText("categories.json")
+                .JSonToList<Category>();
+
             /*
              * Read from file containing same data as above and use generic extension method ToDictionary
              * to create the dictionary rather than using foreach
              */
-            Dictionary<string, Category> dictFromList = File.ReadAllText("categories.json")
-                .JSonToList<Category>()
-                .ToDictionary(cat => cat.CategoryName, cat => cat);
+            Dictionary<string, Category> dictFromList = categoriesFromSomePlace
+                .ToDictionary(
+                    cat => cat.CategoryName, 
+                    cat => cat);
 
             /*
              * iterate key values
              */
             foreach (var category in dictFromList)
             {
+
                 Debug.WriteLine($"{category.Key,-19}{category.Value.CategoryID}");
             }
             

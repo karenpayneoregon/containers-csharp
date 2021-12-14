@@ -57,7 +57,7 @@ namespace AccessApplication
             if (CategoriesComboBox.DataSource is List<Category> list)
             {
                 var current = (Category)CategoriesComboBox.SelectedItem;
-                MessageBox.Show(@$"{current.Name}");
+                MessageBox.Show(@$"{current.Id}");
             }
             else
             {

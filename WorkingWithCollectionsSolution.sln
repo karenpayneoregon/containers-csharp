@@ -69,7 +69,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StudentsConsoleApp", "Stude
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Acccess", "Acccess", "{03F8D32D-9175-4A02-9CDF-1205636D4698}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccessApplication", "AccessApplication\AccessApplication.csproj", "{E613BA68-303F-4E3E-A7E5-C36FF2AF9C51}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccessApplication", "AccessApplication\AccessApplication.csproj", "{E613BA68-303F-4E3E-A7E5-C36FF2AF9C51}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
