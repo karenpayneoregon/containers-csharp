@@ -44,6 +44,29 @@ namespace AccessApplication.Classes
             return table;
         }
 
+        public static DataTable ProductsDataTable()
+        {
+            DataTable table = new();
+
+            using var cn = new OleDbConnection { ConnectionString = ConnectionString };
+            using var cmd = new OleDbCommand() { Connection = cn };
+
+            cmd.CommandText =
+                "SELECT P.ProductID, P.ProductName, P.CategoryID, C.CategoryName as Category, P.SupplierID, S.CompanyName " + 
+                "FROM (Categories AS C INNER JOIN Products AS P ON C.CategoryID = P.CategoryID) " + 
+                "INNER JOIN Suppliers AS S ON P.SupplierID = S.SupplierID;";
+
+            cn.Open();
+
+            table.Load(cmd.ExecuteReader());
+
+            table.Columns["ProductID"].ColumnMapping = MappingType.Hidden;
+            table.Columns["CategoryID"].ColumnMapping = MappingType.Hidden;
+            table.Columns["SupplierID"].ColumnMapping = MappingType.Hidden;
+
+            return table;
+        }
+
         public static List<Category> CategoriesList()
         {
             List<Category> list = new() {new Category() {Id = -1, Name = "Select"}};
