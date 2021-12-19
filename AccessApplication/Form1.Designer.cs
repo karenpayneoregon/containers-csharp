@@ -30,13 +30,13 @@ namespace AccessApplication
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.CurrentProductButton = new System.Windows.Forms.Button();
             this.GetCurrentButton = new System.Windows.Forms.Button();
             this.ListButton = new System.Windows.Forms.Button();
             this.TableButton = new System.Windows.Forms.Button();
             this.ConnectButton = new System.Windows.Forms.Button();
             this.CategoriesComboBox = new System.Windows.Forms.ComboBox();
             this.ProductsDataGridView = new System.Windows.Forms.DataGridView();
-            this.CurrentProductButton = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ProductsDataGridView)).BeginInit();
             this.SuspendLayout();
@@ -53,6 +53,16 @@ namespace AccessApplication
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(676, 43);
             this.panel1.TabIndex = 0;
+            // 
+            // CurrentProductButton
+            // 
+            this.CurrentProductButton.Location = new System.Drawing.Point(280, 9);
+            this.CurrentProductButton.Name = "CurrentProductButton";
+            this.CurrentProductButton.Size = new System.Drawing.Size(118, 23);
+            this.CurrentProductButton.TabIndex = 4;
+            this.CurrentProductButton.Text = "Current product";
+            this.CurrentProductButton.UseVisualStyleBackColor = true;
+            this.CurrentProductButton.Click += new System.EventHandler(this.CurrentProductButton_Click);
             // 
             // GetCurrentButton
             // 
@@ -112,16 +122,6 @@ namespace AccessApplication
             this.ProductsDataGridView.RowTemplate.Height = 25;
             this.ProductsDataGridView.Size = new System.Drawing.Size(651, 150);
             this.ProductsDataGridView.TabIndex = 2;
-            // 
-            // CurrentProductButton
-            // 
-            this.CurrentProductButton.Location = new System.Drawing.Point(280, 9);
-            this.CurrentProductButton.Name = "CurrentProductButton";
-            this.CurrentProductButton.Size = new System.Drawing.Size(118, 23);
-            this.CurrentProductButton.TabIndex = 4;
-            this.CurrentProductButton.Text = "Current product";
-            this.CurrentProductButton.UseVisualStyleBackColor = true;
-            this.CurrentProductButton.Click += new System.EventHandler(this.CurrentProductButton_Click);
             // 
             // Form1
             // 

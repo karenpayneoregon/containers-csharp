@@ -39,7 +39,7 @@ namespace DictionaryConsoleApp
             {
                 dict[word] = dict.GetOrCreate(word) + index;
                 index++;
-            }
+            } //https://github.com/karenpayneoregon/containers-csharp
         }
 
         /// <summary>

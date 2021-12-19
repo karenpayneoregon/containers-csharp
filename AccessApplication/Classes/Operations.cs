@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.OleDb;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,20 @@ namespace AccessApplication.Classes
     {
         public static string ConnectionString =>
             "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=NorthWind.accdb";
+
+        public static Color GetSingleColor()
+        {
+            using var cn = new OleDbConnection { ConnectionString = ConnectionString };
+            using var cmd = new OleDbCommand() { Connection = cn };
+
+            cmd.CommandText = "SELECT T.AccentColor1 FROM Table1 AS T WHERE Id = ? ";
+            cmd.Parameters.Add("@Id", OleDbType.Integer).Value = 1;
+
+            cn.Open();
+
+            var color = Color.FromName(cmd.ExecuteScalar()?.ToString()!);
+            return color;
+        }
 
         public static (bool succcess, Exception exception) TestConnection()
         {
