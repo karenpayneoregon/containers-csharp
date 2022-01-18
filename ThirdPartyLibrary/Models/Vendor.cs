@@ -3,9 +3,9 @@
     public class Vendor
     {
         public int Id { get;  }
-        public string AccountNumber { get; }
-        public string DisplayName { get;  }
-        public int CreditRating { get;  }
+        public string AccountNumber { get; init; }
+        public string DisplayName { get; init; }
+        public int CreditRating { get; init; }
 
         public override string ToString() => DisplayName;
 

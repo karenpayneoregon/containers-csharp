@@ -23,8 +23,26 @@ namespace DictionaryConsoleApp
             //BasicSample2();
             //DirectoryTraverse();
 
-            BasicSample2();
+            //BasicSample2();
 
+            string resultAddress = CreateAddress(5683948823, 2022,1,10);
+
+            Debug.WriteLine(resultAddress);
+
+            EmployeeData employeeData = new EmployeeData()
+            {
+                BaseAddress = "https://US.prism.co.us/ViewFile", 
+                SequenceId = 5683948823, 
+                YearId = DateTime.Now.Year, 
+                Rec = 1, 
+                Country = 10
+            };
+            Debug.WriteLine(employeeData.FinalAddress());
+
+            var PropertyNames = typeof(EmployeeData).GetProperties()
+                .Select(pi => pi.Name).ToList();
+
+            
         }
 
         private static void GenericAdd()
@@ -381,6 +399,24 @@ namespace DictionaryConsoleApp
             // /api/product/list?dog=221&gender=female&age=4,5,6
             Debug.WriteLine(results);
 
+
+
+        }
+
+        private static string CreateAddress(long id, int year, int rec, int country)
+        {
+
+            string address = "https://US.prism.co.us/ViewFile";
+            var queryArguments = new Dictionary<string, string>()
+            {
+                {"SequenceId", $"{id}" },
+                {"YearId", $"{year}" },
+                {"Rec",$"{rec}" },
+                {"country",$"{country}"}
+
+            };
+
+            return QueryHelpers.AddQueryString(address, queryArguments);
         }
 
         private static void ChangeAllValues()

@@ -107,3 +107,9 @@ public class VendorModel : INotifyPropertyChanged
     }
 }
 ```
+
+# Screen shots
+
+Note the dialogs are native [TaskDialog](https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.taskdialog?view=windowsdesktop-6.0) where there are code samples in the following GitHub [repository](https://github.com/karenpayneoregon/task-dialog-csharp).
+
+![image](assets/readOnlyVendor.png)

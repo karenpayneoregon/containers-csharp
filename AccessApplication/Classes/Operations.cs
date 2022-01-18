@@ -17,16 +17,29 @@ namespace AccessApplication.Classes
 
         public static Color GetSingleColor()
         {
-            using var cn = new OleDbConnection { ConnectionString = ConnectionString };
-            using var cmd = new OleDbCommand() { Connection = cn };
 
-            cmd.CommandText = "SELECT T.AccentColor1 FROM Table1 AS T WHERE Id = ? ";
-            cmd.Parameters.Add("@Id", OleDbType.Integer).Value = 1;
+            using (var cn = new OleDbConnection { ConnectionString = ConnectionString })
+            {
+                using (var cmd = new OleDbCommand() { Connection = cn })
+                {
+                    cmd.CommandText = "SELECT T.AccentColor1 FROM Table1 AS T WHERE Id = ? ";
+                    cmd.Parameters.Add("@Id", OleDbType.Integer).Value = 1;
 
-            cn.Open();
+                    cn.Open();
 
-            var color = Color.FromName(cmd.ExecuteScalar()?.ToString()!);
-            return color;
+                    var result = cmd.ExecuteScalar();
+                    if (result != null)
+                    {
+                        return Color.FromName(result.ToString());
+                    }
+                    else
+                    {
+                        // decide on a default color here if failed to get color from database
+                        return Color.Blue; 
+                    }
+                    
+                }
+            }
         }
 
         public static (bool succcess, Exception exception) TestConnection()
@@ -101,6 +114,36 @@ namespace AccessApplication.Classes
             }
 
             return list;
+        }
+
+        public static (int identifier, Exception exception) SampleInsert(string companyName, string contactName)
+        {
+
+            using var cn = new OleDbConnection { ConnectionString = ConnectionString };
+            using var cmd = new OleDbCommand() { Connection = cn };
+
+            cmd.CommandText =
+                "INSERT INTO Customers (CompanyName,ContactName) " + 
+                "Values (@CompanyName,@ContactName)";
+
+            cmd.Parameters.Add("@CompanyName", 
+                OleDbType.LongVarChar).Value = companyName;
+
+            cmd.Parameters.Add("@ContactName", 
+                OleDbType.LongVarChar).Value = contactName;
+
+            try
+            {
+                cn.Open();
+
+                cmd.ExecuteNonQuery();
+                return ((int)cmd.ExecuteScalar(), null);
+            }
+            catch (Exception ex)
+            {
+                return (-1, ex);
+            }
+
         }
     }
 }

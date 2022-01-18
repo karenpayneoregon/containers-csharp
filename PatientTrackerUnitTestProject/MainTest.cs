@@ -70,7 +70,7 @@ namespace PatientTrackerUnitTestProject
         [TestTraits(Trait.ReadOnly)]
         public void InternetLocalTest()
         {
-            var current = InternetHelpers.LocalTime();
+            DateTimeOffset? current = InternetHelpers.LocalTime();
 
             if (current.HasValue)
             {
@@ -80,7 +80,7 @@ namespace PatientTrackerUnitTestProject
 
                 //Debug.WriteLine($"ReturnTimeOnServer: {result}");
 
-                var zones = current.Value.PossibleTimeZones();
+                ImmutableList<string> zones = current.Value.PossibleTimeZones();
                 //zones[0] = "";
             }
             else
