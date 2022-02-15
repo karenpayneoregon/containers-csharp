@@ -1,6 +1,15 @@
-# About
+# Working with collections
 
-For teaching about [commonly used collection types](https://docs.microsoft.com/en-us/dotnet/standard/collections/commonly-used-collection-types)
+For teaching about [commonly used collection types](https://docs.microsoft.com/en-us/dotnet/standard/collections/commonly-used-collection-types). 
+
+---
+
+*The absolute best way to learn from what is presented is to read this entire readme file to get an idea of why programmers may selection specific types of containers and why they may not be good for certain task.*
+
+*Many times the best solutions turn out to require more effort by a developer which pays back from optimization of memory along with better filling business requirements.*
+
+---
+
 
 New developers to C# with little to no formal training when needing a collection/container will scour the web for a suitable collection and inevitably find `List<T>` or `Array`.
 
