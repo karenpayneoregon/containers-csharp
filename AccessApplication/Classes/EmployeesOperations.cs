@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Data;
 using System.Data.OleDb;
+using System.Threading.Tasks;
 
 namespace AccessApplication.Classes
 {
@@ -47,6 +48,25 @@ namespace AccessApplication.Classes
             table.Rows.Clear();
 
             return table;
+        }
+        public static async Task<DataSet> GetDataSet()
+        {
+            
+            DataSet dataSet = new ();
+
+            await using var cn = new OleDbConnection { ConnectionString = ConnectionString };
+            await using var cmd = new OleDbCommand() { Connection = cn };
+
+            cmd.CommandText = "SELECT EmployeeID, FirstName, LastName FROM Employees";
+
+            await cn.OpenAsync();
+
+            DataTable table = new ("EmployeeTable");
+            table.Load(cmd.ExecuteReader());
+
+            dataSet.Tables.Add(table);
+
+            return dataSet;
         }
         public static DataTable SingleRow(int identifier)
         {

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using AccessApplication.Classes;
 
@@ -35,6 +37,23 @@ namespace AccessApplication
             {
                 table.ImportRow(EmployeesOperations.SingleRow(id).Rows[0]);
             }
+        }
+
+        private async void ReadDatSetButton_Click(object sender, EventArgs e)
+        {
+            
+            await Task.Run(async () =>
+            {
+                DataSet dataSet = await EmployeesOperations.GetDataSet();
+
+                DataTable employeeTable = dataSet.Tables["EmployeeTable"];
+
+                foreach (DataRow row in employeeTable.Rows)
+                {
+                    Debug.WriteLine($"{string.Join(",", row.ItemArray)}");
+                }
+
+            });
         }
     }
 }
