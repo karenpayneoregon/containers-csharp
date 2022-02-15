@@ -381,7 +381,7 @@ foreach (var contact in contacts)
 
 
 
-## Pluralsight courses
+# Pluralsight courses
 
 [Advanced C# Collections](https://app.pluralsight.com/library/courses/csharp-collections-advanced/table-of-contents) (four hours)
 
