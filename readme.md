@@ -74,7 +74,7 @@ In software development, an `immutable object` is one that once created, can't c
 
 Provides methods for creating an class instance that is immutable; meaning it cannot be changed once it is created.
 
-In this solution see th [following project](https://github.com/karenpayneoregon/containers-csharp/tree/master/ConsoleApp1) where code is based off Mobile friendly weekly claims application.cfc component..
+In this solution see the [following project](https://github.com/karenpayneoregon/containers-csharp/tree/master/ConsoleApp1) where code is based off Mobile friendly weekly claims application.cfc component..
 
 **Mutable design note getters/setters**
 
@@ -225,6 +225,11 @@ public class InvalidDataTypeException : Exception
 }
 
 ```
+
+# See also
+
+[Learn the basics on immutability](https://github.com/karenpayneoregon/basic-immutability-csharp)
+
 
 # init keyword C# 9
 
@@ -380,5 +385,10 @@ foreach (var contact in contacts)
 
 [Advanced C# Collections](https://app.pluralsight.com/library/courses/csharp-collections-advanced/table-of-contents) (four hours)
 
+# Immutability repository
 
+[Learn the basics on immutability](https://github.com/karenpayneoregon/basic-immutability-csharp)
 
+# Other
+
+[Working with multiple environments for connection strings](http://example.com)
