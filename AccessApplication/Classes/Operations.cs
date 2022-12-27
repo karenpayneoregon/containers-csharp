@@ -145,5 +145,28 @@ namespace AccessApplication.Classes
             }
 
         }
+
+        public static async Task<(bool success, Exception exception)> Insert(string entry, DateTime dateTime)
+        {
+            using (var cn = new OleDbConnection { ConnectionString = "Your connection string" })
+            {
+                using (var cmd = new OleDbCommand() { Connection = cn })
+                {
+                    cmd.CommandText = "INSERT INTO ProgressReports(Report,DateTime) VALUES(?,?)";
+                    cmd.Parameters.Add("?", OleDbType.LongVarChar).Value = entry;
+                    cmd.Parameters.Add("?", OleDbType.Date).Value = dateTime;
+
+                    try
+                    {
+                        await cn.OpenAsync();
+                        return (await cmd.ExecuteNonQueryAsync() == 1, null);
+                    }
+                    catch (Exception localException)
+                    {
+                        return (false, localException);
+                    }
+                }
+            }
+        }
     }
 }

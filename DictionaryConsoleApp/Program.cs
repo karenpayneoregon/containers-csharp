@@ -25,24 +25,27 @@ namespace DictionaryConsoleApp
 
             //BasicSample2();
 
-            string resultAddress = CreateAddress(5683948823, 2022,1,10);
+            QueryHelperDemo();
+        }
+
+        private static void First()
+        {
+            string resultAddress = CreateAddress(5683948823, 2022, 1, 10);
 
             Debug.WriteLine(resultAddress);
 
             EmployeeData employeeData = new EmployeeData()
             {
-                BaseAddress = "https://US.prism.co.us/ViewFile", 
-                SequenceId = 5683948823, 
-                YearId = DateTime.Now.Year, 
-                Rec = 1, 
+                BaseAddress = "https://US.prism.co.us/ViewFile",
+                SequenceId = 5683948823,
+                YearId = DateTime.Now.Year,
+                Rec = 1,
                 Country = 10
             };
             Debug.WriteLine(employeeData.FinalAddress());
 
             var PropertyNames = typeof(EmployeeData).GetProperties()
                 .Select(pi => pi.Name).ToList();
-
-            
         }
 
         private static void GenericAdd()
@@ -345,6 +348,20 @@ namespace DictionaryConsoleApp
             }
         }
 
+        private static void QueryHelperDemo()
+        {
+
+            Dictionary<string, string> queryArguments = new()
+            {
+                { "versionCode", "RTUK8L1" },
+                { "language", "2" }
+            };
+
+            var results = QueryHelpers.AddQueryString("api/GetCharacteristicsBulk", queryArguments);
+
+            Debug.WriteLine(results);
+        }
+
         /// <summary>
         /// Using a Dictionary create a url with params
         /// </summary>
@@ -370,6 +387,8 @@ namespace DictionaryConsoleApp
             Debug.WriteLine(results);
 
             Debug.WriteLine("");
+
+            return;
 
             queryArguments = new Dictionary<string, string>()
             {
